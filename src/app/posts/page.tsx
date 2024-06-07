@@ -1,5 +1,7 @@
+import Link from "next/link";
+
 async function Home() {
-    const response = await fetch("https://dummyjson.com/posts?limit=3&skip=3");
+    const response = await fetch("https://dummyjson.com/posts?limit=3");
     const data = await response.json();
 
     interface Post {
@@ -13,12 +15,6 @@ async function Home() {
     }
     return (
         <main>
-            <nav className="shadow-sm p-4">
-                <div className="flex text-zinc-400 gap-4 justify-end">
-                    <a href=""></a>
-                    <a href="">Posts</a>
-                </div>
-            </nav>
             <section className="p-4">
                 <h1 className="zinc-800 text-4xl font-bold">Posts</h1>
                 <table>
@@ -31,7 +27,11 @@ async function Home() {
                     <tbody>
                         {data.posts.map((post: Post) => (
                             <tr key={post.id}>
-                                <td className="p-4">{post.title}</td>
+                                <td className="p-4">
+                                    <Link href={`/posts/${post.id}`}>
+                                        {post.title}
+                                    </Link>
+                                </td>
                                 <td className="p-4">{post.body}</td>
                             </tr>
                         ))}
